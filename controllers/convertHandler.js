@@ -2,18 +2,18 @@ function ConvertHandler() {
   
   this.getNum = function(input) {
     let result;
-    const regex = /^(?!.*\..*\.)(?!.*\/.*\/)[\d/\.]+$/;
+    const regex = /(^[\d/\.]+)(?=[a-zA-Z]+$)/;
     const match = input.match(regex);
 
     // if no number is detected, set number as 1
     if (!match) {
+      // console.log("no match")
       result = 1;
-
     // else calculate the expression
     } else {
-      number = match[0];
+      const number = match[0];
       if (number.includes('/')) {
-        const numbers = numbers.split("/");
+        const numbers = number.split("/");
         if (numbers.length != 2) {
           result = "invalid number";
           return result;
@@ -29,6 +29,13 @@ function ConvertHandler() {
   this.getUnit = function(input) {
     let result;
     result = input.match(/[a-zA-Z]+/)[0];
+    result = result.toLowerCase();
+    for (let unit of ["kg", "lbs", "l", "gal", "km", "mi"]) {
+      if (result === unit) {
+        return result;
+      }
+    }
+    result = "invalid unit";
     return result;
   };
   
@@ -109,7 +116,9 @@ function ConvertHandler() {
         break;
       case 'km':
         result = initNum / miToKm;
-        break;        
+        break;  
+      default:
+        result = "invalid unit";
     }
     return result;
   };
