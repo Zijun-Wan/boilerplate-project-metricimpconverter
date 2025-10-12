@@ -98,6 +98,7 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
+    if (initNum === "invalid number") return "invalid number";
     switch(initUnit.toLowerCase()) {
       case 'gal':
         result = initNum * galToL;
