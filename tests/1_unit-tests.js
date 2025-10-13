@@ -46,7 +46,7 @@ suite('Unit Tests', function(){
         suite('Valid input units', function() {
             for (let key in unitPairs) {
                 test(key, function() {
-                    assert.equal(convertHandler.getUnit("2" + key), key.toLowerCase());
+                    assert.equal(convertHandler.getUnit("2" + key), key);
                 });
             };
         });

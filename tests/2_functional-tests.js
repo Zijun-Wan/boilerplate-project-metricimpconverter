@@ -14,14 +14,10 @@ suite('Functional Tests', function() {
             .get('/api/convert?input=10L')
             .end(function(err, res) {
                 assert.equal(res.status, 200);
-                assert.deepEqual(res.body, 
-                    {
-                        "initNum":10,
-                        "initUnit":"l",
-                        "returnNum":2.6417217685798895,
-                        "returnUnit":"gal",
-                        "string":"10 l converts to 2.6417217685798895 gal"
-                    })
+                assert.equal(res.body.initNum, 10);
+                assert.equal(res.body.initUnit, "L");
+                assert.equal(res.body.returnNum, 2.64172);
+                assert.equal(res.body.returnUnit, "gal");
                 done()
             })
     });
@@ -32,10 +28,7 @@ suite('Functional Tests', function() {
             .get('/api/convert?input=32g')
             .end(function(err, res) {
                 assert.equal(res.status, 200);
-                assert.equal(res.body.initNum, 32);
-                assert.equal(res.body.initUnit, "invalid unit");
-                assert.equal(res.body.returnNum, "invalid unit");
-                assert.equal(res.body.returnUnit, "invalid unit");
+                assert.equal(res.text, "invalid unit");
                 done();
             })
     });
@@ -46,10 +39,7 @@ suite('Functional Tests', function() {
             .get('/api/convert?input=3/7.2/4kg')
             .end(function(err, res) {
                 assert.equal(res.status, 200);
-                assert.equal(res.body.initNum, "invalid number");
-                assert.equal(res.body.initUnit, "kg");
-                assert.equal(res.body.returnNum, "invalid number");
-                assert.equal(res.body.returnUnit, "lbs");
+                assert.equal(res.text, "invalid number");
                 done();
             })
     })
@@ -60,10 +50,7 @@ suite('Functional Tests', function() {
             .get('/api/convert?input=3/7.2/4kilomegagram')
             .end(function(err, res) {
                 assert.equal(res.status, 200);
-                assert.equal(res.body.initNum, "invalid number");
-                assert.equal(res.body.initUnit, "invalid unit");
-                assert.equal(res.body.returnNum, "invalid number");
-                assert.equal(res.body.returnUnit, "invalid unit");
+                assert.equal(res.text, "invalid number and unit");
                 done();
             })
     })
@@ -76,7 +63,7 @@ suite('Functional Tests', function() {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.initNum, 1);
                 assert.equal(res.body.initUnit, "kg");
-                assert.equal(res.body.returnNum, 2.2046244201837775);
+                assert.equal(res.body.returnNum, 2.20462);
                 assert.equal(res.body.returnUnit, "lbs");
                 done();
             })

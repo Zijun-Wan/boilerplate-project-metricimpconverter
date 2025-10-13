@@ -31,7 +31,9 @@ function ConvertHandler() {
     result = input.match(/[a-zA-Z]+/)[0];
     result = result.toLowerCase();
     for (let unit of ["kg", "lbs", "l", "gal", "km", "mi"]) {
-      if (result === unit) {
+      if (unit === "l" && result === unit) {
+        return "L";
+      } else if (result === unit) {
         return result;
       }
     }
@@ -121,13 +123,14 @@ function ConvertHandler() {
       default:
         result = "invalid unit";
     }
-    return result;
+    const roundedResult = Number(result.toFixed(5));
+    return roundedResult;
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-    let result;
-    result = initNum.toString() + " " + initUnit + " converts to " + returnNum.toString() + " " + returnUnit;
-    return result;
+    const spelledOutInitUnit = this.spellOutUnit(initUnit);
+    const spelledOutReturnUnit = this.spellOutUnit(returnUnit);
+    return `${initNum} ${spelledOutInitUnit} converts to ${returnNum} ${spelledOutReturnUnit}`;
   };
   
 }
